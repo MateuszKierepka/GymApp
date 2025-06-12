@@ -48,16 +48,19 @@ Projekt spełnia następujące wymagania:
 ## Instalacja i uruchomienie
 
 Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
+
 - [Node.js](https://nodejs.org/) (zalecana wersja LTS)
 - [Docker](https://www.docker.com/)
 - [Angular CLI](https://angular.io/cli)
 
 1. Sklonuj repozytorium:
+
    ```bash
    git clone https://github.com/MateuszKierepka/GymApp.git
    ```
 
 2. Przejdź do katalogu projektu:
+
    ```bash
    cd GymApp
    ```
@@ -65,43 +68,51 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
 ### Instalacja obrazów Docker i uruchomienie kontenerów
 
 1. Pobierz obraz MongoDB:
+
    ```bash
    docker pull mongo:latest
    ```
 
 2. Uruchom kontener MongoDB:
+
    ```bash
    docker run -d -p 27017:27017 --name mongo mongo:latest
    ```
 
 3. Pobierz obraz Ollama:
+
    ```bash
-   docker pull ollama:latest
+   docker pull ollama/ollama
    ```
 
 4. Uruchom kontener Ollama:
+
    ```bash
-   docker run -d -p 11434:11434 --name ollama ollama:latest
+   docker run -d -p 11434:11434 --name ollama ollama/ollama
    ```
 
 5. Zainstaluj model Mistral w kontenerze Ollama:
+
    ```bash
-   docker exec -it ollama ollama install mistral
+   docker exec -it ollama ollama pull mistral
    ```
 
 ### Backend
 
 1. Przejdź do katalogu `backend`:
+
    ```bash
    cd backend
    ```
 
 2. Zainstaluj zależności:
+
    ```bash
    npm install
    ```
 
 3. Uruchom backend:
+
    ```bash
    npm start
    ```
@@ -109,16 +120,19 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
 ### Frontend
 
 1. Przejdź do katalogu `frontend`:
+
    ```bash
    cd frontend
    ```
 
 2. Zainstaluj zależności:
+
    ```bash
    npm install
    ```
 
 3. Uruchom frontend:
+
    ```bash
    ng s
    ```
@@ -131,12 +145,14 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
 ## Technologie
 
 ### Frontend
+
 - Angular 17
 - TypeScript
 - Angular Material
 - CSS
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
