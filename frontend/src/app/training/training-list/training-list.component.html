@@ -1,0 +1,64 @@
+<div class="training-container">
+  <div class="header">
+    <h1>Moje treningi</h1>
+    <div class="header-buttons">
+      <button mat-raised-button color="accent" (click)="generateTraining()" [disabled]="isGenerating">
+        <div class="button-content">
+          <mat-icon *ngIf="!isGenerating">auto_awesome</mat-icon>
+          <mat-spinner *ngIf="isGenerating" diameter="20"></mat-spinner>
+          <span>{{ isGenerating ? 'Generowanie...' : 'Wygeneruj trening' }}</span>
+        </div>
+      </button>
+      <button mat-raised-button color="primary" (click)="createNewTraining()">
+        <mat-icon>add</mat-icon>
+        Nowy trening
+      </button>
+    </div>
+  </div>
+  <div class="training-list" *ngIf="trainings.length > 0; else noTrainings">
+    <mat-card *ngFor="let training of trainings" class="training-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h1>{{ training.name }}</h1>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <h3>Liczba ćwiczeń: {{ training.exercises.length }}</h3>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions class="actions">
+        <button mat-button [ngClass]="{'active-button': expandedTrainingId === training._id}" [color]="expandedTrainingId === training._id ? 'accent' : 'primary'" (click)="toggleOrViewTraining(training._id!)">
+          <mat-icon>visibility</mat-icon>
+          Szczegóły
+        </button>
+        <button mat-button color="accent" (click)="exportToPDF(training)">
+          <mat-icon>picture_as_pdf</mat-icon>
+          Wyeksportuj do PDF
+        </button>
+        <button mat-button color="accent" (click)="editTraining(training)">
+          <mat-icon>edit</mat-icon>
+          Edytuj
+        </button>
+        <button mat-button color="warn" (click)="deleteTraining(training)">
+          <mat-icon>delete</mat-icon>
+          Usuń
+        </button>
+      </mat-card-actions>
+      <div class="training-details" *ngIf="expandedTrainingId === training._id">
+        <h3>Szczegóły treningu</h3>
+        <div *ngFor="let exercise of training.exercises; let i = index">
+          <h4>{{ i + 1 }}. {{ exercise.name }}</h4>
+          <ul>
+            <li *ngFor="let set of exercise.sets">
+              <span class="details-text">{{ set.weight }} kg x {{ set.reps }} powtórzeń</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <ng-template #noTrainings>
+    <div class="no-trainings">
+      <p>Nie masz jeszcze żadnych treningów. Stwórz swój pierwszy trening!</p>
+    </div>
+  </ng-template>
+</div>

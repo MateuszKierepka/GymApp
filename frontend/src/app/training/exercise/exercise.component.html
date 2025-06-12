@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="exercise.name" placeholder="Nazwa ćwiczenia">
+      </mat-form-field>
+    </mat-card-title>
+    <button mat-icon-button color="warn" (click)="onDeleteExercise()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="sets-list">
+      <div *ngFor="let set of exercise.sets" class="set-item" [class.confirmed]="set.isConfirmed">
+        <div class="set-info" *ngIf="!set.isConfirmed">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="set.weight" placeholder="Ciężar">
+          </mat-form-field>
+          <span class="multiply x_odstep">x</span>
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="set.reps" placeholder="Ilość">
+          </mat-form-field>
+        </div>
+        <div class="set-info" *ngIf="set.isConfirmed">
+          <span>{{ set.weight }} kg</span>
+          <span class="multiply">x</span>
+          <span>{{ set.reps }}</span>
+        </div>
+        <div class="set-actions">
+          <button mat-icon-button color="primary" (click)="onConfirmSet(set)" *ngIf="!set.isConfirmed">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="onDuplicateSet(set)" *ngIf="set.isConfirmed && isLastConfirmedSet(set)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="onEditSet(set)" *ngIf="set.isConfirmed">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteSet(set)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="timer-container" *ngIf="showTimer">
+      <div class="timer" [class.warning]="isLastTenSeconds()">
+        {{ formatTime(timerValue) }}
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="onAddSet()">
+      <mat-icon>add</mat-icon>
+      Dodaj serię
+    </button>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,65 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-title>Rejestracja</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Imię</mat-label>
+          <input matInput formControlName="firstName" required>
+          <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">
+            Imię jest wymagane
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('firstName')?.hasError('pattern')">
+            Imię powinno zaczynać się wielką literą i może zawierać tylko litery
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nazwisko</mat-label>
+          <input matInput formControlName="lastName" required>
+          <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">
+            Nazwisko jest wymagane
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('lastName')?.hasError('pattern')">
+            Nazwisko powinno zaczynać się wielką literą i może zawierać tylko litery
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Adres e-mail</mat-label>
+          <input matInput formControlName="email" type="email" required>
+          <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            Wprowadź poprawny adres e-mail
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Hasło</mat-label>
+          <input matInput formControlName="password" type="password" required>
+          <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            Hasło musi mieć co najmniej 6 znaków
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Potwierdź hasło</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" required>
+          <mat-error *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">
+            Hasła muszą się zgadzać
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="registerForm.invalid">
+          Zarejestruj się
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="start">
+      <a [routerLink]="['/login']" class="login-link">Masz już konto? Zaloguj się</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/training" class="nav-link">Gym App</a>
+  </div>
+  
+  <button class="hamburger" (click)="toggleMenu()" [class.active]="isMenuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="navbar-menu" [class.active]="isMenuOpen">
+    <a *ngIf="isAdmin" routerLink="/admin/users" class="nav-link" (click)="closeMenu()">Zarządzanie</a>
+    <a routerLink="/training" class="nav-link" (click)="closeMenu()">Lista treningów</a>
+    <a routerLink="/account" class="nav-link" (click)="closeMenu()">Konto</a>
+    <a (click)="logout()" class="nav-link" style="cursor: pointer;" (click)="closeMenu()">Wyloguj</a>
+  </div>
+</nav>

@@ -1,0 +1,47 @@
+<div class="training-detail-container">
+  <div class="header">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Powrót
+    </button>
+    <button mat-button (click)="toggleLiveTraining()" [class.active]="isLiveTraining" class="live-button">
+      <mat-icon>timer</mat-icon>
+      Live
+    </button>
+  </div>
+  <mat-card>
+    <mat-card-header>
+      <div class="training-name-container">
+        <mat-form-field class="training-name-field">
+          <input matInput [(ngModel)]="training.name" placeholder="Podaj nazwę treningu">
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="exercises-list">
+        <app-exercise
+          *ngFor="let exercise of training.exercises; let last = last"
+          [exercise]="exercise"
+          [isLastExercise]="last"
+          [isLiveTraining]="isLiveTraining"
+          (deleteExercise)="deleteExercise(exercise)"
+          (addSet)="addSet(exercise)"
+          (confirmSet)="confirmSet($event)"
+          (deleteSet)="deleteSet(exercise, $event)">
+        </app-exercise>
+      </div>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="addExercise()">
+          <mat-icon>add</mat-icon>
+          Dodaj ćwiczenie
+        </button>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="saveTraining()">
+        <mat-icon>save</mat-icon>
+        Zapisz
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

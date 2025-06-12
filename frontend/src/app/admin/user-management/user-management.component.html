@@ -1,0 +1,49 @@
+<div class="user-management-container">
+  <h1>Zarządzanie użytkownikami</h1>
+  <div *ngIf="loading" class="loading">
+    Ładowanie użytkowników...
+  </div>
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+  <div *ngIf="!loading && !error" class="table-container">
+    <table mat-table [dataSource]="users" class="mat-elevation-z8">
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Imię</th>
+        <td mat-cell *matCellDef="let user">{{user.firstName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+        <td mat-cell *matCellDef="let user">{{user.lastName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user">{{user.email}}</td>
+      </ng-container>
+      <ng-container matColumnDef="isAdmin">
+        <th mat-header-cell *matHeaderCellDef>Administrator</th>
+        <td mat-cell *matCellDef="let user">
+          <ng-container *ngIf="currentUser?._id !== user._id">
+            <mat-slide-toggle
+              [checked]="user.isAdmin"
+              (change)="toggleAdminRole(user)"
+              color="primary">
+            </mat-slide-toggle>
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Usuń</th>
+        <td mat-cell *matCellDef="let user">
+          <ng-container *ngIf="currentUser?._id !== user._id">
+            <button mat-icon-button color="warn" (click)="deleteUser(user)" matTooltip="Usuń użytkownika">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

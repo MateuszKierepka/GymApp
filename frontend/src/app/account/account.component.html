@@ -1,0 +1,137 @@
+<div class="account-container">
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+  <mat-card class="account-card">
+    <mat-card-header>
+      <mat-card-title>Dane konta</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Imię</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error *ngIf="accountForm.get('firstName')?.hasError('required')">
+              Imię jest wymagane
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('firstName')?.hasError('pattern')">
+              Imię powinno zaczynać się wielką literą i może zawierać tylko litery
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="accountForm.get('lastName')?.hasError('required')">
+              Nazwisko jest wymagane
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('lastName')?.hasError('pattern')">
+              Nazwisko powinno zaczynać się wielką literą i może zawierać tylko litery
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+            <mat-error *ngIf="accountForm.get('email')?.hasError('required')">
+              Email jest wymagany
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('email')?.hasError('email')">
+              Wprowadź poprawny adres email
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Aktualne hasło</mat-label>
+            <input matInput formControlName="currentPassword" type="password" required>
+            <mat-error *ngIf="accountForm.get('currentPassword')?.hasError('required')">
+              Hasło jest wymagane
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('currentPassword')?.hasError('minlength')">
+              Hasło musi mieć co najmniej 6 znaków
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!accountForm.valid">
+            Zapisz zmiany
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="account-card">
+    <mat-card-header>
+      <mat-card-title>Zmiana hasła</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()">
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Aktualne hasło</mat-label>
+            <input matInput formControlName="currentPassword" type="password" required>
+            <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('required')">
+              Hasło jest wymagane
+            </mat-error>
+            <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('minlength')">
+              Hasło musi mieć co najmniej 6 znaków
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Nowe hasło</mat-label>
+            <input matInput formControlName="newPassword" type="password" required>
+            <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('required')">
+              Hasło jest wymagane
+            </mat-error>
+            <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('minlength')">
+              Hasło musi mieć co najmniej 6 znaków
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Potwierdź hasło</mat-label>
+            <input matInput formControlName="confirmPassword" type="password" required>
+            <mat-error *ngIf="passwordForm.get('confirmPassword')?.hasError('required')">
+              Potwierdzenie hasła jest wymagane
+            </mat-error>
+            <mat-error *ngIf="passwordForm.hasError('passwordMismatch')">
+              Hasła muszą się zgadzać
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!passwordForm.valid">
+            Zmień hasło
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="account-card danger-zone-card">
+    <mat-card-header>
+      <mat-card-title>Usuń konto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Usunięcie konta jest nieodwracalne. Wszystkie Twoje dane zostaną trwale usunięte!</p>
+      <div class="button-row">
+        <button mat-raised-button color="warn" (click)="deleteAccount()">
+          Usuń konto
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

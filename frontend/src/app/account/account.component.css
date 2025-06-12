@@ -1,0 +1,50 @@
+.account-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.account-card {
+  margin-bottom: 2rem;
+}
+
+.danger-zone-card {
+  border: 1px solid #f44336;
+}
+
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #4caf50;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+} 
+
+mat-card-title {
+  margin-bottom: 1rem;
+}

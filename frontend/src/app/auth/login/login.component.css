@@ -1,0 +1,54 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.login-card {
+  width: 400px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-card-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.actions-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.forgot-password-link,
+.register-link {
+  text-decoration: none;
+  color: #1976d2;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.register-link {
+  margin-top: 20px;
+}
+
+.forgot-password-link:hover,
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+}
