@@ -67,31 +67,13 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
 
 ### Instalacja obrazów Docker i uruchomienie kontenerów
 
-1. Pobierz obraz MongoDB:
+1. Uruchom wszystkie kontenery za pomocą Docker Compose:
 
    ```bash
-   docker pull mongo:latest
+   docker-compose up -d
    ```
 
-2. Uruchom kontener MongoDB:
-
-   ```bash
-   docker run -d -p 27017:27017 --name mongo mongo:latest
-   ```
-
-3. Pobierz obraz Ollama:
-
-   ```bash
-   docker pull ollama/ollama
-   ```
-
-4. Uruchom kontener Ollama:
-
-   ```bash
-   docker run -d -p 11434:11434 --name ollama ollama/ollama
-   ```
-
-5. Zainstaluj model Mistral w kontenerze Ollama:
+2. Zainstaluj model Mistral w kontenerze Ollama:
 
    ```bash
    docker exec -it ollama ollama pull mistral
