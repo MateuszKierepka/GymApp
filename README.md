@@ -2,7 +2,7 @@
 
 ## Opis projektu
 
-GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i monitorowania postępów w fitnessie. Aplikacja została zbudowana zgodnie z wymaganiami przedmiotu "Szkielety programistyczne w aplikacjach internetowych" i wykorzystuje najnowsze technologie oraz najlepsze praktyki programistyczne.
+GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i monitorowania postępów w fitnessie. Aplikacja wykorzystuje najnowsze technologie oraz najlepsze praktyki programistyczne.
 
 ### Główne funkcjonalności
 
