@@ -7,6 +7,7 @@ GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i mo
 ### Główne funkcjonalności
 
 - **Zarządzanie treningami**
+
   - Tworzenie i edycja planów treningowych
   - Historia treningów
   - Generacja treningów z wykorzystaniem AI (Ollama + Mistral)
@@ -14,6 +15,7 @@ GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i mo
   - Eksport treningów do PDF
 
 - **Zarządzanie użytkownikami**
+
   - Rejestracja i logowanie użytkowników
   - System ról (użytkownik, administrator)
   - Reset hasła, gdy użytkownik zapomniał starego hasła
@@ -29,11 +31,13 @@ GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i mo
 Projekt spełnia następujące wymagania:
 
 1. **Architektura**
+
    - Frontend: Angular
    - Backend: Express.js
    - Baza danych: MongoDB
 
 2. **Bezpieczeństwo**
+
    - Haszowanie haseł
    - Autoryzacja i uwierzytelnianie
    - Zabezpieczenie endpointów
@@ -70,7 +74,7 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
 1. Uruchom wszystkie kontenery za pomocą Docker Compose:
 
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 2. Zainstaluj model Mistral w kontenerze Ollama:
