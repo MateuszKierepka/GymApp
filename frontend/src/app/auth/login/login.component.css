@@ -52,3 +52,44 @@ mat-card-title {
   color: red;
   margin-bottom: 20px;
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+.google-signin-container {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.google-signin-container iframe {
+  width: 100% !important;
+  height: 40px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  filter: grayscale(100%) !important;
+  opacity: 0.9 !important;
+}
+
+.google-signin-container iframe:hover {
+  opacity: 1 !important;
+}

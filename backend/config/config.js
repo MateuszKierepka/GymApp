@@ -1,5 +1,7 @@
+require('dotenv').config();
+
 module.exports = {
-  mongoURI: 'mongodb://localhost:27017/gymapp',
-  jwtSecret: 'your-secret-key',
-  jwtExpiration: '24h'
+  mongoURI: process.env.MONGODB_URI,
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiration: process.env.JWT_EXPIRATION
 };

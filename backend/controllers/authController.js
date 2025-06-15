@@ -4,6 +4,9 @@ const config = require('../config/config');
 const VerificationCode = require('../models/VerificationCode');
 const sendVerificationCode = require('../utils/emailService');
 const crypto = require('crypto');
+const { OAuth2Client } = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 exports.register = async (req, res) => {
   try {
@@ -271,5 +274,64 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error('Błąd w resetPassword:', error);
     res.status(500).json({ message: 'Wystąpił błąd podczas resetowania hasła' });
+  }
+};
+
+exports.googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+    
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name, given_name, family_name } = payload;
+
+    let firstName = given_name;
+    let lastName = family_name;
+
+    if (!firstName || !lastName) {
+      const nameParts = name.split(' ');
+      firstName = nameParts[0] || 'User';
+      lastName = nameParts.slice(1).join(' ') || 'Google';
+    }
+
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        email,
+        firstName,
+        lastName,
+        password: Math.random().toString(36).slice(-8),
+        isVerified: true,
+        authProvider: 'google'
+      });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id },
+      config.jwtSecret,
+      { expiresIn: '24h' }
+    );
+
+    res.json({
+      token,
+      user: {
+        _id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isAdmin: user.isAdmin
+      }
+    });
+  } catch (error) {
+    console.error('Google login error:', error);
+    res.status(401).json({ message: 'Nieprawidłowy token Google' });
   }
 };

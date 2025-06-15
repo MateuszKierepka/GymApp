@@ -112,4 +112,14 @@ export class AuthService {
   resetPassword(email: string, code: string, newPassword: string): Observable<any> {
     return this.apiService.post<any>(`/auth/reset-password`, { email, code, newPassword });
   }
+
+  loginWithGoogle(credential: string): Observable<AuthResponse> {
+    return this.apiService.post<AuthResponse>('/auth/google-login', { credential }).pipe(
+      tap(response => {
+        this.tokenService.setToken(response.token);
+        this.tokenService.setUser(response.user);
+        this.isAuthenticatedSubject.next(true);
+      })
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Exercise } from '../../models/exercise.model';
 import { Set } from '../../models/set.model';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./exercise.component.css']
 })
 
-export class ExerciseComponent implements OnDestroy {
+export class ExerciseComponent implements OnDestroy, OnChanges {
   @Input() isLastExercise: boolean = false;
   @Input() isLiveTraining: boolean = false;
   @Input() exercise!: Exercise;
@@ -38,12 +38,26 @@ export class ExerciseComponent implements OnDestroy {
 
   constructor(
     private snackBar: MatSnackBar,
-    private timerService: TimerService
+    private timerService: TimerService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnDestroy() {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isLiveTraining']) {
+      if (this.isLiveTraining && this.isLastExercise) {
+        const lastSet = this.exercise.sets[this.exercise.sets.length - 1];
+        if (lastSet && lastSet.isConfirmed) {
+          this.startTimer();
+        }
+      } else {
+        this.stopTimer();
+      }
     }
   }
 
@@ -69,9 +83,15 @@ export class ExerciseComponent implements OnDestroy {
     set.isConfirmed = true;
     this.confirmSet.emit(set);
 
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
+
     if (this.isLiveTraining && this.isLastExercise && this.isLastConfirmedSet(set)) {
       this.stopTimer();
       this.startTimer();
+    } else if (this.isLiveTraining && this.isLastExercise) {
+      this.stopTimer();
     }
   }
 
@@ -81,6 +101,9 @@ export class ExerciseComponent implements OnDestroy {
       this.showTimer = false;
     }
     this.deleteSet.emit(set);
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   onDeleteExercise() {
@@ -89,10 +112,16 @@ export class ExerciseComponent implements OnDestroy {
       this.showTimer = false;
     }
     this.deleteExercise.emit();
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   onEditSet(set: Set) {
     set.isConfirmed = false;
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   isLastConfirmedSet(set: Set): boolean {
@@ -109,6 +138,11 @@ export class ExerciseComponent implements OnDestroy {
       isConfirmed: true
     };
     this.exercise.sets.push(newSet);
+    
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
+
     if (this.isLiveTraining && this.isLastExercise) {
       this.startTimer();
     }
@@ -118,12 +152,16 @@ export class ExerciseComponent implements OnDestroy {
     this.showTimer = true;
     this.timerSubscription = this.timerService.startTimer(60).subscribe(time => {
       this.timerValue = time;
+      this.cdr.detectChanges();
     });
   }
 
   stopTimer() {
     this.timerService.stopTimer();
     this.showTimer = false;
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   formatTime(seconds: number): string {

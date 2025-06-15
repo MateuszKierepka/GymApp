@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TrainingService } from '../../services/training.service';
@@ -43,7 +43,8 @@ export class TrainingDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private trainingService: TrainingService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -89,12 +90,20 @@ export class TrainingDetailComponent implements OnInit {
         isConfirmed: false
       }]
     });
+    setTimeout(() => {
+      this.exerciseComponents.notifyOnChanges();
+      this.cdr.detectChanges();
+    });
   }
 
   deleteExercise(exercise: Exercise) {
     const index = this.training.exercises.indexOf(exercise);
     if (index > -1) {
       this.training.exercises.splice(index, 1);
+      setTimeout(() => {
+        this.exerciseComponents.notifyOnChanges();
+        this.cdr.detectChanges();
+      });
     }
   }
 
@@ -114,6 +123,9 @@ export class TrainingDetailComponent implements OnInit {
   confirmSet(set: Set) {
     if (set.weight >= 0 && set.reps > 0) {
       set.isConfirmed = true;
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      });
     }
   }
 
@@ -135,6 +147,9 @@ export class TrainingDetailComponent implements OnInit {
         component.stopTimer();
       });
     }
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   saveTraining(): void {

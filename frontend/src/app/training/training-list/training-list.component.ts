@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material.module';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,16 +34,23 @@ export class TrainingListComponent implements OnInit {
   constructor(
     private trainingService: TrainingService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.loadTrainings();
     this.trainingService.isGenerating$.subscribe(isGenerating => {
       this.isGenerating = isGenerating;
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      });
     });
     this.trainingService.generationComplete$.subscribe(() => {
       this.loadTrainings();
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      });
       this.snackBar.open('Trening został wygenerowany pomyślnie!', 'Zamknij', {
         duration: 3000
       });
@@ -54,6 +61,9 @@ export class TrainingListComponent implements OnInit {
     this.trainingService.getTrainings().subscribe({
       next: (trainings) => {
         this.trainings = trainings;
+        setTimeout(() => {
+          this.cdr.detectChanges();
+        });
       },
       error: (error) => {
         console.error('Error loading trainings:', error);
@@ -290,10 +300,8 @@ export class TrainingListComponent implements OnInit {
     this.trainingService.generateTraining().subscribe({
       error: (error) => {
         console.error('Error generating training:', error);
-        this.snackBar.dismiss();
         this.snackBar.open('Wystąpił błąd podczas generowania treningu', 'Zamknij', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
+          duration: 3000
         });
       }
     });

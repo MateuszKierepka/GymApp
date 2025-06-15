@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 module.exports = {
-  host: 'smtp.gmail.com', // okresla serwer
-  port: 587,
-  secure: false,
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: process.env.EMAIL_SECURE === 'true',
   auth: {
-    user: 'gymapp03@gmail.com',
-    pass: 'gfnl dhqv darn gvyf'
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   },
-  from: 'GymApp <gymapp03@gmail.com>'
-}; 
+  from: process.env.EMAIL_FROM
+};

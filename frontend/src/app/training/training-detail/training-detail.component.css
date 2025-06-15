@@ -13,6 +13,16 @@
 
 .live-button {
   margin-left: auto;
+  transition: color 0.2s ease;
+}
+
+.live-button.active {
+  color: #f44336 !important;
+  font-weight: 500;
+}
+
+.live-button.active mat-icon {
+  color: #f44336 !important;
 }
 
 .header button.active {

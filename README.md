@@ -17,6 +17,7 @@ GymApp to nowoczesna aplikacja webowa służąca do zarządzania treningami i mo
 - **Zarządzanie użytkownikami**
 
   - Rejestracja i logowanie użytkowników
+  - Logowanie za pomocą konta Google
   - System ról (użytkownik, administrator)
   - Reset hasła, gdy użytkownik zapomniał starego hasła
   - Edycja danych profilowych
@@ -42,6 +43,7 @@ Projekt spełnia następujące wymagania:
    - Autoryzacja i uwierzytelnianie
    - Zabezpieczenie endpointów
    - Walidacja po stronie klienta i serwera
+   - Integracja z Google OAuth 2.0
 
 3. **Funkcjonalność**
    - Pełne operacje CRUD
@@ -97,7 +99,12 @@ Przed rozpoczęciem instalacji upewnij się, że masz zainstalowane:
    npm install
    ```
 
-3. Uruchom backend:
+3. Skonfiguruj zmienne środowiskowe:
+
+   - Utwórz plik `.env` na podstawie `.env.example`
+   - Dodaj `GOOGLE_CLIENT_ID` z Google Cloud Console
+
+4. Uruchom backend:
 
    ```bash
    npm start
